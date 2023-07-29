@@ -1,4 +1,4 @@
-import { MEAL_TIMES, MealTime } from './../entities/Meal.entity';
+import { MEAL_TIMES, MealTime } from '../entities/Meal.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDate,

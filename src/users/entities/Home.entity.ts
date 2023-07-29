@@ -1,4 +1,4 @@
-import { User } from 'src/auth/entities/User.entity';
+import { User } from 'src/users/entities/User.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Task } from './Task.entity';
 import { Meal } from './Meal.entity';

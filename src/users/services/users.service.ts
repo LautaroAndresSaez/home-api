@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto } from '../dtos/User.dtos';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CreateUserDto, UpdateUserDto } from '../../auth/dtos/User.dtos';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/User.entity';
 import { Repository } from 'typeorm';
 
 import * as bcrypt from 'bcrypt';
+import { Home } from '../entities/Home.entity';
 
 @Injectable()
 export class UsersService {
@@ -26,7 +27,10 @@ export class UsersService {
   }
 
   async findById(id: string): Promise<User> {
-    const user = await this.userRepository.findOneBy({ id });
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['home'],
+    });
     delete user.password;
     return user;
   }
@@ -42,5 +46,15 @@ export class UsersService {
   //TODO: implement update
   update(id: string, payload: UpdateUserDto) {
     throw new Error('This method is not implemented');
+  }
+
+  async addHome(id: string, home: Home) {
+    const user = await this.findById(id);
+    if (user.home) {
+      throw new NotFoundException('El usuario ya tiene un hogar');
+    }
+    user.home = home;
+    await this.userRepository.save(user);
+    return user;
   }
 }
