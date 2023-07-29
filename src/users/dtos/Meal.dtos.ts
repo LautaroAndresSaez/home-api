@@ -1,5 +1,5 @@
 import { MEAL_TIMES, MealTime } from '../entities/Meal.entity';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import {
   IsDate,
   IsIn,
@@ -34,3 +34,5 @@ export class CreateMealDto {
   @ApiProperty()
   readonly time: MealTime;
 }
+
+export class UpdateMealDto extends PartialType(CreateMealDto) {}

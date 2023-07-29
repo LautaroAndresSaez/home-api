@@ -25,20 +25,16 @@ export class HomesService {
       throw new NotFoundException('El usuario ya tiene un hogar');
     }
     const home = this.homeRepository.create(payload);
-    home.users = [user];
     const createdHome = await this.homeRepository.save(home);
     await this.usersService.addHome(userId, createdHome);
     return createdHome;
   }
 
   async addUserToHome(userId: string, id: string) {
-    const user = await this.usersService.findById(userId);
-    if (user.home) {
-      throw new NotFoundException('El usuario ya tiene un hogar');
-    }
     const home = await this.findById(id);
-    home.users.push(user);
     await this.usersService.addHome(userId, home);
-    return await this.homeRepository.save(home);
+    return await this.homeRepository.findOne({
+      where: { id },
+    });
   }
 }
