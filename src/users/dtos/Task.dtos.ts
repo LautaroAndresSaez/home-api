@@ -1,5 +1,6 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsDate,
   IsNotEmpty,
   IsNumber,
@@ -37,4 +38,9 @@ export class CreateTaskDto {
   readonly priority: number;
 }
 
-export class UpdateTaskDto extends PartialType(CreateTaskDto) {}
+export class UpdateTaskDto extends PartialType(CreateTaskDto) {
+  @IsBoolean()
+  @IsOptional()
+  @ApiProperty()
+  readonly isCompleted: boolean;
+}

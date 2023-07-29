@@ -26,6 +26,9 @@ export class Task extends BaseEntity {
   @Column('int8')
   priority: number;
 
+  @Column({ default: false })
+  isCompleted: boolean;
+
   @ManyToOne(() => Home, (home) => home.tasks)
   home: Home;
 

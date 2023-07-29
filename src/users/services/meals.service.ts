@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Meal } from '../entities/Meal.entity';
-import { Repository } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
 import { CreateMealDto, UpdateMealDto } from '../dtos/Meal.dtos';
 import { HomesService } from './homes.service';
 
@@ -13,11 +13,14 @@ export class MealsService {
   ) {}
 
   findByHome(homeId: string) {
+    const date = new Date();
+    date.setDate(date.getDate() - 2);
     return this.mealRepository.find({
       where: {
         home: {
           id: homeId,
         },
+        date: MoreThan(date),
       },
     });
   }
