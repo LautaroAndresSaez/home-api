@@ -3,6 +3,7 @@ import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import config, { Config } from 'src/env/config';
 import { ConfigModule, ConfigType } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 
 @Global()
 @Module({
@@ -26,6 +27,18 @@ import { ConfigModule, ConfigType } from '@nestjs/config';
         };
       },
       inject: [config.KEY],
+    }),
+    JwtModule.registerAsync({
+      global: true,
+      inject: [config.KEY],
+      useFactory(configService: ConfigType<Config>) {
+        return {
+          secret: configService.secret,
+          signOptions: {
+            expiresIn: '1d',
+          },
+        };
+      },
     }),
   ],
   exports: [TypeOrmModule],
