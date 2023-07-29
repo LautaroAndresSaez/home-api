@@ -7,11 +7,15 @@ import { Meal } from './entities/Meal.entity';
 import { User } from './entities/User.entity';
 import { UsersService } from './services/users.service';
 import { HomesController } from './controllers/homes.controller';
+import { MealsController } from './controllers/meals.controller';
+import { TasksController } from './controllers/tasks.controller';
+import { TasksService } from './services/tasks.service';
+import { MealsService } from './services/meals.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Home, Task, Meal])],
-  providers: [UsersService, HomesService],
+  providers: [UsersService, HomesService, TasksService, MealsService],
   exports: [UsersService],
-  controllers: [HomesController],
+  controllers: [HomesController, MealsController, TasksController],
 })
 export class UsersModule {}
