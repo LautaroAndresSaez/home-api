@@ -1,4 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common';
 import { CreateUserDto } from '../dtos/User.dtos';
 import { AuthService } from '../services/auth.service';
 import { IsPublic } from '../decorators/access.decorator';
@@ -9,6 +15,7 @@ export class AuthController {
 
   @Post()
   @IsPublic()
+  @UseInterceptors(ClassSerializerInterceptor)
   signUp(@Body() payload: CreateUserDto) {
     return this.authService.signUp(payload);
   }

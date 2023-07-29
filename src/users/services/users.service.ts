@@ -17,13 +17,12 @@ export class UsersService {
   async create(payload: CreateUserDto): Promise<User> {
     const { password, email } = payload;
     const hashedPassword = bcrypt.hashSync(password, this.SALT);
-    const user = await this.userRepository.save({
+    const user = await this.userRepository.create({
       ...payload,
       email: email.toLowerCase(),
       password: hashedPassword,
     });
-    delete user.password;
-    return user;
+    return this.userRepository.save(user);
   }
 
   async findById(id: string): Promise<User> {

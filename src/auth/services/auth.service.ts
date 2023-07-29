@@ -23,8 +23,13 @@ export class AuthService {
 
   private userToResp(user: User) {
     return {
-      ...user,
-      accessToken: this.jwtService.sign(user),
+      name: user.name,
+      lastName: user.lastName,
+      email: user.email,
+      accessToken: this.jwtService.sign({
+        id: user.id,
+        email: user.email,
+      }),
     };
   }
 }
