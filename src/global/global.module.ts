@@ -4,23 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import config, { Config } from 'src/env/config';
 import { ConfigModule, ConfigType } from '@nestjs/config';
 
-/*
-TypeOrmModule.forRootAsync({
-      useFactory: (configService: ConfigType<Config>) => {
-        return {
-          type: 'postgres',
-          host,
-          port,
-          username,
-          password,
-          database: name,
-          synchronize: true,
-        };
-      },
-      inject: [config.KEY],
-    }),
-*/
-
 @Global()
 @Module({
   imports: [
