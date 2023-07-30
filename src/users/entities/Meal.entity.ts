@@ -19,7 +19,10 @@ export class Meal extends BaseEntity {
   @Column()
   name: string;
 
-  @Column('varchar')
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
   desc: string;
 
   @Column('date')

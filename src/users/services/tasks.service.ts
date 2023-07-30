@@ -25,6 +25,13 @@ export class TasksService {
     });
   }
 
+  findById(id: string) {
+    return this.taskRepository.findOne({
+      where: { id },
+      relations: ['home'],
+    });
+  }
+
   async create(homeId: string, payload: CreateTaskDto) {
     const home = await this.homesService.findById(homeId);
     const task = this.taskRepository.create(payload);

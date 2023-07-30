@@ -12,6 +12,10 @@ export class MealsService {
     private homesServices: HomesService,
   ) {}
 
+  findById(id: string) {
+    return this.mealRepository.findOne({ where: { id }, relations: ['home'] });
+  }
+
   findByHome(homeId: string) {
     const date = new Date();
     date.setDate(date.getDate() - 2);

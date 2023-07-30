@@ -46,7 +46,14 @@ export class MealsController {
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() payload: UpdateMealDto,
+    @Req() req,
   ) {
+    const userId = req.user.id;
+    const user = await this.usersService.findById(userId);
+    const meal = await this.mealsService.findById(id);
+    if (user?.home?.id !== meal?.home?.id) {
+      throw new NotFoundException('No existe un comida con ese id');
+    }
     return this.mealsService.update(id, payload);
   }
 }

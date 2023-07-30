@@ -17,7 +17,10 @@ export class Task extends BaseEntity {
   @Column()
   name: string;
 
-  @Column('text')
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
   desc: string;
 
   @Column('date')
